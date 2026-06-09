@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Fairy Tail | Complete Glass Edition</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><radialGradient id="g" cx="35%25" cy="24%25" r="75%25"><stop offset="0%25" stop-color="%23fff"/><stop offset="28%25" stop-color="%237dd3fc"/><stop offset="58%25" stop-color="%23a78bfa"/><stop offset="82%25" stop-color="%2334d399"/><stop offset="100%25" stop-color="%231e3a8a"/></radialGradient></defs><rect width="64" height="64" rx="18" fill="%23071f5f"/><circle cx="32" cy="32" r="23" fill="url(%23g)"/><path d="M12 42C25 20 42 20 54 31" fill="none" stroke="%23fff" stroke-width="4" stroke-linecap="round" opacity=".78"/></svg>' />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800;900&display=swap');
+    * { font-family: 'Noto Sans Thai', system-ui, sans-serif; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    :root {
+      --text-main:#10204a;
+      --muted:#64748b;
+      --surface:rgba(255,255,255,.54);
+      --surface-strong:rgba(255,255,255,.72);
+      --header:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.48);
+      --shadow:0 22px 70px rgba(37,99,235,.13);
+      --bg: radial-gradient(circle at 10% 8%, rgba(125,211,252,.40), transparent 27%), radial-gradient(circle at 88% 4%, rgba(216,180,254,.32), transparent 26%), radial-gradient(circle at 50% 95%, rgba(52,211,153,.22), transparent 30%), linear-gradient(180deg,#f8fbff,#edf6ff 46%,#f8fbff);
+    }
+    html.dark {
+      --text-main:#eaf2ff;
+      --muted:#a7b4c8;
+      --surface:rgba(15,23,42,.54);
+      --surface-strong:rgba(15,23,42,.72);
+      --header:rgba(15,23,42,.74);
+      --line:rgba(148,163,184,.25);
+      --shadow:0 22px 90px rgba(0,0,0,.34);
+      --bg: radial-gradient(circle at 12% 4%, rgba(56,189,248,.20), transparent 27%), radial-gradient(circle at 85% 10%, rgba(168,85,247,.23), transparent 30%), radial-gradient(circle at 45% 96%, rgba(16,185,129,.13), transparent 34%), linear-gradient(180deg,#07111f,#0f172a 48%,#181a39);
+    }
+    html { scroll-behavior:smooth; }
+    body { min-height:100vh; margin:0; color:var(--text-main); background:var(--bg); overflow-x:hidden; transition:background .35s ease,color .25s ease; }
+    body::before { content:""; position:fixed; inset:-25%; z-index:-2; pointer-events:none; background: conic-gradient(from 180deg at 50% 50%, rgba(56,189,248,.08), rgba(168,85,247,.10), rgba(52,211,153,.08), rgba(251,191,36,.07), rgba(56,189,248,.08)); animation:aurora 18s ease-in-out infinite alternate; filter:blur(2px); }
+    body::after { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px); background-size:48px 48px; mask-image:linear-gradient(to bottom,rgba(0,0,0,.38),transparent 78%); }
+    @keyframes aurora { from { transform:translate3d(-2%,-1%,0) rotate(0); } to { transform:translate3d(2%,2%,0) rotate(8deg); } }
+    .glass,.card,.modal-panel { position:relative; background:linear-gradient(145deg,var(--surface-strong),var(--surface)); backdrop-filter:blur(24px) saturate(1.25); -webkit-backdrop-filter:blur(24px) saturate(1.25); border:1px solid var(--line); box-shadow:var(--shadow); }
+    .rainbow-border::before,.card::before,.glass::before,.modal-panel::before { content:""; position:absolute; inset:0; padding:1px; border-radius:inherit; pointer-events:none; background:linear-gradient(120deg,rgba(56,189,248,.52),rgba(217,70,239,.22),rgba(52,211,153,.36),rgba(251,191,36,.18),rgba(56,189,248,.48)); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; opacity:.46; }
+    .card { overflow:hidden; transition:transform .25s ease, box-shadow .25s ease; }
+    .card:hover { transform:translateY(-3px); }
+    .input { width:100%; padding:.85rem 1rem; border-radius:1.1rem; border:1px solid var(--line); outline:none; background:rgba(255,255,255,.48); color:var(--text-main); transition:.2s ease; }
+    html.dark .input { background:rgba(15,23,42,.45); }
+    .input:focus { border-color:rgba(56,189,248,.70); box-shadow:0 0 0 4px rgba(56,189,248,.14); }
+    .nav-btn { padding:.65rem 1rem; border-radius:1rem; font-weight:800; transition:.2s ease; color:var(--text-main); }
+    .nav-active { background:linear-gradient(135deg,#2563eb,#7c3aed); color:#fff !important; box-shadow:0 14px 30px rgba(37,99,235,.25); }
+    .btn-primary { background:linear-gradient(135deg,#2563eb,#7c3aed); color:white; font-weight:900; border-radius:1.15rem; box-shadow:0 16px 34px rgba(37,99,235,.24); transition:.2s ease; }
+    .btn-primary:hover { transform:translateY(-2px); filter:saturate(1.1); }
+    .btn-soft { background:rgba(255,255,255,.40); border:1px solid var(--line); color:var(--text-main); border-radius:1rem; font-weight:800; }
+    html.dark .btn-soft { background:rgba(15,23,42,.45); }
+    .iridescent-img { position:relative; isolation:isolate; filter:saturate(1.08) contrast(1.02); }
+    .iridescent-img::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:linear-gradient(120deg,rgba(255,255,255,.28),rgba(125,211,252,.12),rgba(217,70,239,.12),rgba(52,211,153,.10),transparent 72%); mix-blend-mode:screen; opacity:.58; }
+    .sequoia-orb { position:relative; display:inline-grid; place-items:center; width:2.9rem; height:2.9rem; border-radius:999px; isolation:isolate; overflow:hidden; background:radial-gradient(circle at 28% 22%, rgba(255,255,255,.95) 0 7%, rgba(190,245,255,.62) 8% 16%, transparent 17%), radial-gradient(circle at 62% 68%, rgba(34,211,238,.72), transparent 34%), radial-gradient(circle at 30% 76%, rgba(16,185,129,.74), transparent 31%), radial-gradient(circle at 74% 26%, rgba(147,51,234,.72), transparent 33%), linear-gradient(135deg,#064e3b,#2563eb 48%,#581c87); box-shadow:inset 0 0 18px rgba(255,255,255,.38), inset -12px -16px 26px rgba(15,23,42,.34), 0 0 24px rgba(34,211,238,.32), 0 14px 34px rgba(37,99,235,.24); animation:orbFloat 4.8s ease-in-out infinite, orbGlow 3.2s ease-in-out infinite alternate; }
+    .sequoia-orb::before { content:""; position:absolute; inset:-3px; border-radius:inherit; padding:2px; background:conic-gradient(from var(--orb-angle,0deg), rgba(56,189,248,.94), rgba(168,85,247,.72), rgba(16,185,129,.82), rgba(59,130,246,.78), rgba(251,191,36,.42), rgba(56,189,248,.94)); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; opacity:.78; animation:orbRimSpin 5s linear infinite; }
+    .sequoia-orb::after { content:""; position:absolute; inset:13%; border-radius:999px; background:conic-gradient(from 190deg, transparent 0 18%, rgba(255,255,255,.38) 22%, transparent 34%, rgba(125,211,252,.28) 48%, rgba(192,132,252,.26) 62%, transparent 78%), radial-gradient(circle at 38% 30%, rgba(255,255,255,.42), transparent 21%); mix-blend-mode:screen; filter:blur(.2px); animation:orbInnerDrift 7s ease-in-out infinite alternate; }
+    .orb-core { width:42%; height:42%; border-radius:999px; background:radial-gradient(circle, rgba(236,254,255,.96) 0 10%, rgba(125,211,252,.52) 24%, rgba(167,139,250,.30) 48%, transparent 70%); box-shadow:0 0 16px rgba(125,211,252,.62), 0 0 30px rgba(168,85,247,.28); animation:orbCorePulse 2.8s ease-in-out infinite alternate; }
+    .sequoia-orb.mini { width:1.38rem; height:1.38rem; vertical-align:-.28rem; margin-right:.42rem; box-shadow:inset 0 0 10px rgba(255,255,255,.35), 0 0 15px rgba(34,211,238,.35); }
+    .sequoia-orb.mini .orb-core { width:45%; height:45%; }
+    @keyframes orbFloat { 0%,100% { transform:translateY(0) rotate(-2deg); } 50% { transform:translateY(-3px) rotate(2deg); } }
+    @keyframes orbGlow { from { filter:saturate(1.03) brightness(1); } to { filter:saturate(1.28) brightness(1.08); } }
+    @keyframes orbRimSpin { to { --orb-angle:360deg; transform:rotate(360deg); } }
+    @keyframes orbInnerDrift { from { transform:rotate(0deg) scale(1); opacity:.68; } to { transform:rotate(26deg) scale(1.08); opacity:.92; } }
+    @keyframes orbCorePulse { from { transform:scale(.88); opacity:.76; } to { transform:scale(1.12); opacity:1; } }
+    @media (prefers-reduced-motion: reduce) { .sequoia-orb, .sequoia-orb::before, .sequoia-orb::after, .orb-core { animation:none !important; } }
+    .avatar-wrap { position:relative; border-radius:999px; padding:2px; background:conic-gradient(from 180deg,rgba(56,189,248,.75),rgba(217,70,239,.48),rgba(52,211,153,.62),rgba(251,191,36,.35),rgba(56,189,248,.75)); box-shadow:0 10px 30px rgba(56,189,248,.18); }
+    .avatar-wrap img { border-radius:999px; width:100%; height:100%; object-fit:cover; display:block; background:#fff; }
+    .page:not(.hidden) { animation:pageIn .35s ease both; }
+    @keyframes pageIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    .emoji-btn { width:2.25rem; height:2.25rem; display:grid; place-items:center; border-radius:.9rem; background:rgba(255,255,255,.42); border:1px solid var(--line); transition:.18s; }
+    .emoji-btn:hover { transform:translateY(-2px) scale(1.05); background:rgba(56,189,248,.18); }
+    .media-thumb { width:100%; max-height:340px; object-fit:cover; border-radius:1.5rem; cursor:pointer; border:1px solid var(--line); }
+    .chip { display:inline-flex; align-items:center; gap:.35rem; padding:.38rem .65rem; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.38); font-size:.75rem; font-weight:800; color:var(--text-main); }
+    html.dark .chip { background:rgba(15,23,42,.42); }
+    .hidden { display:none !important; }
+    ::-webkit-scrollbar { width:8px; height:8px; }
+    ::-webkit-scrollbar-thumb { background:rgba(56,189,248,.46); border-radius:999px; }
+    .mobile-panel { display:none; }
+    @media (max-width: 1023px) {
+      .mobile-panel { display:block; position:fixed; inset:0 0 0 auto; width:min(82vw,320px); transform:translateX(105%); transition:.3s ease; z-index:70; }
+      .mobile-panel.open { transform:translateX(0); }
+      main { padding-bottom:5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 z-50 glass rounded-b-[1.8rem]" style="background:var(--header);">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <button onclick="showPage('home')" class="flex items-center gap-3 min-w-0">
+        <div class="sequoia-orb" aria-label="ลูกแก้ว Fairy Tail เคลื่อนไหว"><span class="orb-core"></span></div>
+        <div class="text-left leading-tight hidden xs:block">
+          <h1 class="text-lg sm:text-xl font-black">Fairy Tail</h1>
+          <p class="text-[10px] sm:text-xs font-bold text-sky-500 uppercase tracking-widest">Glass Complete</p>
+        </div>
+      </button>
+      <nav class="hidden lg:flex items-center gap-1 text-sm">
+        <button data-page="home" onclick="showPage('home')" class="nav-btn nav-active">หน้าแรก</button>
+        <button data-page="community" onclick="showPage('community')" class="nav-btn">ชุมชน</button>
+        <button data-page="matching" onclick="showPage('matching')" class="nav-btn">จับคู่เรียน</button>
+        <button data-page="tutorRoom" onclick="showPage('tutorRoom')" class="nav-btn">ห้องติวเตอร์</button>
+        <button data-page="developer" onclick="showPage('developer')" class="nav-btn">ศูนย์ผู้พัฒนา</button>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button onclick="toggleTheme()" class="btn-soft w-10 h-10 grid place-items-center"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+        <div id="guestActions" class="hidden sm:flex items-center gap-2">
+          <button onclick="openModal('loginModal')" class="btn-soft px-4 py-2">เข้าสู่ระบบ</button>
+          <button onclick="openModal('registerModal')" class="btn-primary px-4 py-2">สมัคร</button>
+        </div>
+        <div id="userActions" class="hidden items-center gap-2">
+          <button onclick="openProfile()" class="btn-soft flex items-center gap-2 py-1.5 pl-1.5 pr-3">
+            <span class="avatar-wrap w-8 h-8"><img id="topAvatar" alt="avatar" /></span>
+            <span id="topName" class="text-xs font-black hidden sm:inline"></span>
+          </button>
+          <button onclick="logout()" class="w-10 h-10 rounded-2xl bg-red-500/10 text-red-500"><i class="fa-solid fa-power-off"></i></button>
+        </div>
+        <button onclick="toggleMobileMenu()" class="lg:hidden btn-soft w-10 h-10 grid place-items-center"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobileOverlay" onclick="toggleMobileMenu(false)" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[65]"></div>
+  <aside id="mobileMenu" class="mobile-panel glass rounded-l-[2rem] p-6">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-black">เมนู Fairy Tail</h2>
+      <button onclick="toggleMobileMenu(false)" class="text-2xl text-slate-400">&times;</button>
+    </div>
+    <nav class="flex flex-col gap-2">
+      <button onclick="goMobile('home')" class="btn-soft text-left p-4"><i class="fa-solid fa-house mr-3"></i>หน้าแรก</button>
+      <button onclick="goMobile('community')" class="btn-soft text-left p-4"><i class="fa-solid fa-users mr-3"></i>ชุมชน</button>
+      <button onclick="goMobile('matching')" class="btn-soft text-left p-4"><i class="fa-solid fa-magnifying-glass mr-3"></i>จับคู่เรียน</button>
+      <button onclick="goMobile('tutorRoom')" class="btn-soft text-left p-4"><i class="fa-solid fa-chalkboard-user mr-3"></i>ห้องติวเตอร์</button>
+      <button onclick="goMobile('developer')" class="btn-soft text-left p-4"><i class="fa-solid fa-chart-line mr-3"></i>ศูนย์ผู้พัฒนา</button>
+    </nav>
+    <div id="mobileGuestActions" class="mt-8 space-y-3">
+      <button onclick="openModal('loginModal'); toggleMobileMenu(false)" class="btn-soft w-full py-4">เข้าสู่ระบบ</button>
+      <button onclick="openModal('registerModal'); toggleMobileMenu(false)" class="btn-primary w-full py-4">สมัครสมาชิก</button>
+    </div>
+  </aside>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 md:py-8">
+    <section id="home" class="page">
+      <div class="glass rainbow-border rounded-[2.4rem] p-6 md:p-12 overflow-hidden">
+        <div class="grid lg:grid-cols-[1.1fr,.9fr] gap-8 items-center">
+          <div>
+            <h2 class="text-4xl md:text-6xl font-black leading-tight mb-5">ชุมชนเรียนรู้<br><span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-violet-500 to-emerald-400">รวมคนชอบเรียน</span></h2>
+            <p class="text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-300 mb-7">แชร์โพสต์พร้อมรูปหรือคลิป ค้นหาติวเตอร์ตามรายวิชา แชทพร้อมอิโมจิเฉพาะ และให้ผู้พัฒนาดูแลระบบผ่านศูนย์ควบคุมเชิงลึกได้ครบในไฟล์เดียว</p>
+            <div class="grid sm:grid-cols-3 gap-3 mb-7">
+              <div class="card rounded-3xl p-4"><p class="text-xs text-slate-500 font-bold">รายวิชา</p><p id="homeSubjectCount" class="text-3xl font-black text-blue-500">20</p></div>
+              <div class="card rounded-3xl p-4"><p class="text-xs text-slate-500 font-bold">จับคู่ที่บันทึก</p><p id="homeMatchCount" class="text-3xl font-black text-violet-500">0</p></div>
+              <div class="card rounded-3xl p-4"><p class="text-xs text-slate-500 font-bold">โพสต์ทั้งหมด</p><p id="homePostCount" class="text-3xl font-black text-emerald-500">0</p></div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button onclick="showPage('matching')" class="btn-primary px-7 py-4"><span class="sequoia-orb mini" aria-hidden="true"><span class="orb-core"></span></span>เริ่มจับคู่</button>
+              <button onclick="showPage('community')" class="btn-soft px-7 py-4"><i class="fa-solid fa-images mr-2"></i>ดูชุมชน</button>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="rounded-[2rem] overflow-hidden iridescent-img shadow-2xl">
+              <img class="w-full h-[330px] md:h-[430px] object-cover" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1300&q=85" alt="นักเรียนเรียนร่วมกัน" />
+            </div>
+            <div class="absolute -bottom-5 left-5 right-5 glass rounded-3xl p-4">
+              <p class="text-sm font-black mb-1"><i class="fa-solid fa-shield-heart text-emerald-400 mr-2"></i>ระบบควบคุมโดยผู้พัฒนา</p>
+              <p class="text-xs text-slate-500 dark:text-slate-300">ดูข้อมูลจับคู่ ลบโพสต์ แบนบัญชี 1–30 วัน และติดตามข้อมูลเชิงลึกได้ทันที</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="page hidden max-w-3xl mx-auto">
+      <div class="flex items-center justify-between gap-3 mb-6">
+        <div><h2 class="text-2xl md:text-3xl font-black">ชุมชนโพสต์</h2><p class="text-sm text-slate-500 dark:text-slate-300">โพสต์ข้อความ รูป คลิป คอมเมนต์ และใช้อิโมจิ Fairy Tail</p></div>
+        <button onclick="openCreatePost()" class="btn-primary w-12 h-12 grid place-items-center"><i class="fa-solid fa-plus"></i></button>
+      </div>
+      <div id="postList" class="space-y-6 pb-16"></div>
+    </section>
+
+    <section id="matching" class="page hidden">
+      <div class="grid lg:grid-cols-[340px,1fr] gap-6">
+        <aside class="card rounded-[2rem] p-5 h-fit lg:sticky lg:top-24">
+          <h2 class="text-xl font-black mb-4">ตัวกรองจับคู่</h2>
+          <div class="space-y-4">
+            <div><label class="block text-sm font-black mb-2">ระดับชั้น</label><div id="filterGrades" class="grid grid-cols-3 gap-2"></div></div>
+            <div><label class="block text-sm font-black mb-2">รายวิชา</label><select id="filterSubject" class="input" onchange="runMatching()"></select></div>
+            <button onclick="runMatching()" class="btn-primary w-full py-4">ค้นหาติวเตอร์</button>
+          </div>
+        </aside>
+        <div>
+          <div class="flex items-end justify-between gap-3 mb-5"><div><h2 class="text-2xl md:text-3xl font-black">ติวเตอร์ที่แนะนำ</h2><p class="text-sm text-slate-500 dark:text-slate-300">เมื่อเริ่มแชท ระบบจะบันทึกคู่จับแมตช์ให้ผู้พัฒนาดูได้</p></div></div>
+          <div id="matchResults" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tutorRoom" class="page hidden max-w-4xl mx-auto"><div id="tutorStatusView"></div></section>
+
+    <section id="developer" class="page hidden">
+      <div id="devLockedView" class="max-w-md mx-auto card rounded-[2.2rem] p-8 text-center">
+        <div class="w-20 h-20 mx-auto rounded-3xl grid place-items-center text-4xl mb-5 rainbow-border" style="background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(168,85,247,.20));"><i class="fa-solid fa-lock"></i></div>
+        <h2 class="text-2xl font-black mb-2">ศูนย์ควบคุมผู้พัฒนา</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-300 mb-5">ต้องเป็นบัญชีผู้พัฒนาและกรอกรหัสลับเพื่อเข้าดูข้อมูลเชิงลึก</p>
+        <input id="devCodeInput" class="input text-center mb-3" type="password" placeholder="รหัสลับผู้พัฒนา" />
+        <button onclick="devLogin()" class="btn-primary w-full py-4">เข้าสู่ศูนย์ควบคุม</button>
+      </div>
+      <div id="devDashboard" class="hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div><h2 class="text-3xl md:text-4xl font-black">ศูนย์ควบคุมผู้พัฒนา</h2><p class="text-sm text-slate-500 dark:text-slate-300">ข้อมูลเชิงลึก การจับคู่ การลบโพสต์ และการแบนบัญชี 1–30 วัน</p></div>
+          <button onclick="logoutDev()" class="btn-soft px-5 py-3 text-red-500"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>ออกจากศูนย์ควบคุม</button>
+        </div>
+        <div id="devStats" class="grid grid-cols-2 lg:grid-cols-6 gap-4"></div>
+        <div class="grid xl:grid-cols-[1.1fr,.9fr] gap-6">
+          <div class="card rounded-[2rem] p-5 overflow-hidden"><h3 class="font-black text-xl mb-4">คู่จับแมตช์ล่าสุด</h3><div id="devMatchTable" class="overflow-x-auto"></div></div>
+          <div class="card rounded-[2rem] p-5"><h3 class="font-black text-xl mb-4">รายวิชายอดนิยม</h3><div id="devSubjectInsight" class="space-y-3"></div></div>
+        </div>
+        <div class="card rounded-[2rem] overflow-hidden"><div class="p-5 border-b border-white/20"><h3 class="font-black text-xl">จัดการบัญชีผู้ใช้</h3></div><div id="devUserTable" class="overflow-x-auto"></div></div>
+        <div class="card rounded-[2rem] overflow-hidden"><div class="p-5 border-b border-white/20"><h3 class="font-black text-xl">จัดการโพสต์ทั้งหมด</h3></div><div id="devPostTable" class="overflow-x-auto"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+    <div id="registerModal" class="modal-panel hidden w-full max-w-2xl rounded-[2.2rem] p-6 md:p-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAllModals()" class="absolute top-5 right-5 text-2xl text-slate-400">&times;</button>
+      <h3 class="text-3xl font-black mb-2">สมัครสมาชิก</h3><p class="text-sm text-slate-500 dark:text-slate-300 mb-6">สร้างบัญชีพร้อมเลือกบทบาทและรูปโปรไฟล์ได้</p>
+      <form onsubmit="handleRegister(event)" class="grid sm:grid-cols-2 gap-4">
+        <input id="regFirst" required placeholder="ชื่อจริง" class="input" /><input id="regLast" required placeholder="นามสกุลจริง" class="input" />
+        <input id="regNick" required placeholder="ชื่อเล่นในเว็บ" class="input sm:col-span-2" />
+        <select id="regGrade" required class="input"></select><input id="regEmail" type="email" required placeholder="อีเมล" class="input" />
+        <input id="regPass" type="password" required placeholder="รหัสผ่าน" class="input sm:col-span-2" />
+        <div class="sm:col-span-2"><label class="block text-sm font-black mb-2">รูปโปรไฟล์เริ่มต้น (ไม่ใส่ก็ได้)</label><input id="regAvatarFile" type="file" accept="image/*" class="input" /></div>
+        <div class="sm:col-span-2 card rounded-3xl p-4"><p class="font-black mb-3">บทบาทหลัก</p><div class="flex flex-wrap gap-5"><label><input type="radio" name="mainRole" value="user" checked onchange="updateRegDevUI()"> ผู้ใช้ทั่วไป</label><label><input type="radio" name="mainRole" value="developer" onchange="updateRegDevUI()"> ผู้พัฒนา</label></div><div id="regDevCodeWrap" class="hidden mt-4"><input id="regDevCode" type="password" placeholder="รหัสลับผู้พัฒนา" class="input" /></div></div>
+        <div class="sm:col-span-2 card rounded-3xl p-4"><p class="font-black mb-3">บทบาทเสริม</p><div class="flex flex-wrap gap-5"><label><input type="checkbox" id="regSubLearner"> ผู้เรียน</label><label><input type="checkbox" id="regSubTutor"> ติวเตอร์</label></div></div>
+        <button class="sm:col-span-2 btn-primary py-4">สมัครสมาชิก</button>
+      </form>
+    </div>
+
+    <div id="loginModal" class="modal-panel hidden w-full max-w-md rounded-[2.2rem] p-6 md:p-8">
+      <button onclick="closeAllModals()" class="absolute top-5 right-5 text-2xl text-slate-400">&times;</button>
+      <h3 class="text-3xl font-black mb-2">เข้าสู่ระบบ</h3><p class="text-sm text-slate-500 dark:text-slate-300 mb-6">กลับเข้าสู่โลก Fairy Tail</p>
+      <form onsubmit="handleLogin(event)" class="space-y-4"><input id="loginEmail" type="email" required placeholder="อีเมล" class="input" /><input id="loginPass" type="password" required placeholder="รหัสผ่าน" class="input" /><button class="btn-primary w-full py-4">เข้าสู่ระบบ</button></form>
+    </div>
+
+    <div id="profileModal" class="modal-panel hidden w-full max-w-xl rounded-[2.2rem] p-6 md:p-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAllModals()" class="absolute top-5 right-5 text-2xl text-slate-400">&times;</button>
+      <div id="profileView"></div>
+    </div>
+
+    <div id="postModal" class="modal-panel hidden w-full max-w-2xl rounded-[2.2rem] p-6 md:p-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAllModals()" class="absolute top-5 right-5 text-2xl text-slate-400">&times;</button>
+      <h3 class="text-2xl font-black mb-4">สร้างโพสต์ใหม่</h3>
+      <form onsubmit="handleCreatePost(event)" class="space-y-4">
+        <div class="relative"><textarea id="postInput" required placeholder="วันนี้มีอะไรอยากแชร์ไหม..." class="input h-36 resize-none"></textarea><button type="button" onclick="toggleEmojiPicker('postEmojiPicker')" class="absolute bottom-3 right-3 btn-soft w-10 h-10">✦</button></div>
+        <div id="postEmojiPicker" class="hidden grid grid-cols-8 gap-2"></div>
+        <div><label class="block text-sm font-black mb-2">เพิ่มรูปหรือคลิป</label><input id="postMediaFile" type="file" accept="image/*,video/*" class="input" /></div>
+        <button class="btn-primary w-full py-4">โพสต์เลย</button>
+      </form>
+    </div>
+
+    <div id="chatModal" class="modal-panel hidden w-full max-w-2xl rounded-[2.2rem] overflow-hidden h-[82vh] flex flex-col">
+      <div class="p-5 bg-gradient-to-r from-blue-600 via-violet-600 to-emerald-500 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3"><span class="avatar-wrap w-11 h-11"><img id="chatAvatar" alt="chat avatar" /></span><div><h4 id="chatName" class="font-black"></h4><p class="text-xs text-white/80">Fairy Chat</p></div></div>
+        <button onclick="closeAllModals()" class="text-2xl">&times;</button>
+      </div>
+      <div id="chatMessages" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+      <div id="chatEmojiPicker" class="hidden p-3 grid grid-cols-10 gap-2 border-t border-white/20"></div>
+      <form onsubmit="handleSendChat(event)" class="p-4 flex gap-2 border-t border-white/20"><button type="button" onclick="toggleEmojiPicker('chatEmojiPicker')" class="btn-soft w-12 h-12">✦</button><input id="chatInput" class="input flex-1" placeholder="พิมพ์ข้อความ..." autocomplete="off" /><button class="btn-primary w-12 h-12 grid place-items-center"><i class="fa-solid fa-paper-plane"></i></button></form>
+    </div>
+
+    <div id="mediaModal" class="modal-panel hidden w-full max-w-4xl rounded-[2rem] p-4">
+      <button onclick="closeAllModals()" class="absolute top-4 right-5 z-10 text-3xl text-white drop-shadow">&times;</button>
+      <div id="mediaPreview" class="rounded-[1.5rem] overflow-hidden"></div>
+    </div>
+  </div>
+
+  <script>
+    const SUBJECTS = ['คณิตศาสตร์','ภาษาอังกฤษ','วิทยาศาสตร์','ฟิสิกส์','เคมี','ชีววิทยา','ภาษาไทย','สังคมศึกษา','คอมพิวเตอร์','ศิลปะ','ประวัติศาสตร์','ภูมิศาสตร์','ดาราศาสตร์','เศรษฐศาสตร์','ภาษาจีน','ภาษาญี่ปุ่น','ภาษาเกาหลี','เขียนโปรแกรม','ออกแบบกราฟิก','ดนตรี'];
+    const GRADES = ['ม.1','ม.2','ม.3','ม.4','ม.5','ม.6'];
+    const FAIRY_EMOJIS = ['✦','✧','❉','✺','✹','✵','✷','☾','☼','❄','♡','♢','♧','♕','⚝','༄','⋆','ꕤ','✿','❀','🜲','🜚','🜁','🜄'];
+    const DEV_SECRET = 'fiolabelly19999999OPsaddsadd';
+    const $ = id => document.getElementById(id);
+    const safe = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    const nowThai = iso => new Date(iso).toLocaleString('th-TH');
+    const uid = () => Date.now() + Math.floor(Math.random()*9999);
+
+    const store = {
+      get accounts(){return JSON.parse(localStorage.getItem('ft_accounts')||'[]')}, set accounts(v){localStorage.setItem('ft_accounts',JSON.stringify(v))},
+      get posts(){return JSON.parse(localStorage.getItem('ft_posts')||'[]')}, set posts(v){localStorage.setItem('ft_posts',JSON.stringify(v))},
+      get chats(){return JSON.parse(localStorage.getItem('ft_chats')||'{}')}, set chats(v){localStorage.setItem('ft_chats',JSON.stringify(v))},
+      get matches(){return JSON.parse(localStorage.getItem('ft_matches')||'[]')}, set matches(v){localStorage.setItem('ft_matches',JSON.stringify(v))},
+      get current(){return JSON.parse(localStorage.getItem('ft_current')||'null')}, set current(v){v?localStorage.setItem('ft_current',JSON.stringify(v)):localStorage.removeItem('ft_current')},
+      get theme(){return localStorage.getItem('ft_theme')||'light'}, set theme(v){localStorage.setItem('ft_theme',v)},
+      get devUnlocked(){return sessionStorage.getItem('ft_dev_unlocked')==='true'}, set devUnlocked(v){v?sessionStorage.setItem('ft_dev_unlocked','true'):sessionStorage.removeItem('ft_dev_unlocked')}
+    };
+
+    let activePage = 'home';
+    let activeChatId = null;
+    let activeMatchMeta = null;
+    let selectedFilterGrade = '';
+    let activeEmojiTarget = null;
+
+    function init(){ migrateData(); applyTheme(); renderSelects(); renderGradeFilters(); renderEmojiPickers(); renderAll(); showPage('home'); }
+    function migrateData(){ const accs=store.accounts.map(a=>({...a, subRoles:a.subRoles||[], avatar:a.avatar||avatarFor(a.nick||'fairy'), tutor:{open:false,grades:[],subjects:[],mode:'ออนไลน์',...(a.tutor||{})}, banUntil:a.banUntil||null, createdAt:a.createdAt||new Date().toISOString()})); store.accounts=accs; const posts=store.posts.map(p=>({...p, comments:p.comments||[], likes:p.likes||[], media:p.media||null, authorId:p.authorId||null})); store.posts=posts; }
+    function avatarFor(seed){ return `https://api.dicebear.com/8.x/adventurer/svg?seed=${encodeURIComponent(seed||'fairy')}`; }
+    function currentAccount(){ const cur=store.current; return cur?store.accounts.find(a=>a.id===cur.id):null; }
+    function accountName(id){ return store.accounts.find(a=>a.id===id)?.nick || 'ไม่พบผู้ใช้'; }
+    function accountAvatar(id){ return store.accounts.find(a=>a.id===id)?.avatar || avatarFor('unknown'); }
+    function isDev(){ return currentAccount()?.mainRole==='developer'; }
+
+    function applyTheme(){ document.documentElement.classList.toggle('dark', store.theme==='dark'); $('themeIcon').className = store.theme==='dark'?'fa-solid fa-sun':'fa-solid fa-moon'; }
+    function toggleTheme(){ store.theme = store.theme==='dark'?'light':'dark'; applyTheme(); }
+    function toggleMobileMenu(force){ const open = force ?? !$('mobileMenu').classList.contains('open'); $('mobileMenu').classList.toggle('open',open); $('mobileOverlay').classList.toggle('hidden',!open); }
+    function goMobile(page){ showPage(page); toggleMobileMenu(false); }
+
+    function renderSelects(){ const opts=(list,hint)=>`<option value="">${hint}</option>`+list.map(x=>`<option value="${safe(x)}">${safe(x)}</option>`).join(''); $('regGrade').innerHTML=opts(GRADES,'เลือกระดับชั้น'); $('filterSubject').innerHTML=opts(SUBJECTS,'เลือกทุกวิชา'); }
+    function renderGradeFilters(){ $('filterGrades').innerHTML=GRADES.map(g=>`<button onclick="setFilterGrade('${g}')" class="py-2 rounded-xl text-sm font-black border ${selectedFilterGrade===g?'bg-blue-600 text-white border-blue-600':'btn-soft'}">${g}</button>`).join(''); }
+    function setFilterGrade(g){ selectedFilterGrade=selectedFilterGrade===g?'':g; renderGradeFilters(); runMatching(); }
+
+    function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden')); $(id).classList.remove('hidden'); document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('nav-active',b.dataset.page===id)); activePage=id; if(id==='community')renderPosts(); if(id==='matching')runMatching(); if(id==='tutorRoom')renderTutorRoom(); if(id==='developer')checkDevAccess(); renderHomeStats(); window.scrollTo({top:0,behavior:'smooth'}); }
+    function renderAll(){ const a=currentAccount(); $('guestActions').classList.toggle('hidden',!!a); $('mobileGuestActions').classList.toggle('hidden',!!a); $('userActions').classList.toggle('hidden',!a); if(a){ $('topAvatar').src=a.avatar; $('topName').textContent=a.nick; } renderHomeStats(); }
+    function renderHomeStats(){ $('homeSubjectCount').textContent=SUBJECTS.length; $('homeMatchCount').textContent=store.matches.length; $('homePostCount').textContent=store.posts.length; }
+
+    function openModal(id){ $('modalOverlay').classList.remove('hidden'); $('modalOverlay').classList.add('flex'); document.querySelectorAll('#modalOverlay > div').forEach(d=>d.classList.add('hidden')); $(id).classList.remove('hidden'); }
+    function closeAllModals(){ $('modalOverlay').classList.add('hidden'); $('modalOverlay').classList.remove('flex'); }
+    function updateRegDevUI(){ const isD=document.querySelector('input[name="mainRole"]:checked').value==='developer'; $('regDevCodeWrap').classList.toggle('hidden',!isD); }
+    function fileToDataUrl(file){ return new Promise((resolve,reject)=>{ if(!file)return resolve(null); const r=new FileReader(); r.onload=()=>resolve(r.result); r.onerror=reject; r.readAsDataURL(file); }); }
+
+    async function handleRegister(e){ e.preventDefault(); const accounts=store.accounts; const email=$('regEmail').value.trim(); if(accounts.some(a=>a.email===email))return alert('อีเมลนี้ถูกใช้งานแล้ว'); const mainRole=document.querySelector('input[name="mainRole"]:checked').value; if(mainRole==='developer'&&$('regDevCode').value!==DEV_SECRET)return alert('รหัสลับผู้พัฒนาไม่ถูกต้อง'); const subRoles=[]; if($('regSubLearner').checked)subRoles.push('learner'); if($('regSubTutor').checked)subRoles.push('tutor'); const nick=$('regNick').value.trim(); const avatar=await fileToDataUrl($('regAvatarFile').files[0]) || avatarFor(nick); const a={id:uid(),first:$('regFirst').value.trim(),last:$('regLast').value.trim(),nick,grade:$('regGrade').value,email,pass:$('regPass').value,mainRole,subRoles,avatar,tutor:{open:false,grades:[],subjects:[],mode:'ออนไลน์'},createdAt:new Date().toISOString(),banUntil:null}; accounts.push(a); store.accounts=accounts; store.current={id:a.id}; closeAllModals(); renderAll(); alert('สมัครสมาชิกสำเร็จ'); }
+    function handleLogin(e){ e.preventDefault(); const a=store.accounts.find(x=>x.email===$('loginEmail').value.trim()&&x.pass===$('loginPass').value); if(!a)return alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง'); if(a.banUntil&&new Date(a.banUntil)>new Date())return alert(`บัญชีนี้ถูกแบนถึง ${nowThai(a.banUntil)}`); if(a.banUntil&&new Date(a.banUntil)<=new Date()){ a.banUntil=null; store.accounts=store.accounts.map(x=>x.id===a.id?a:x); } store.current={id:a.id}; closeAllModals(); renderAll(); }
+    function logout(){ store.current=null; store.devUnlocked=false; renderAll(); showPage('home'); }
+
+    function openProfile(){ const a=currentAccount(); if(!a)return; $('profileView').innerHTML=`<div class="text-center mb-6"><span class="avatar-wrap w-28 h-28 mx-auto block"><img src="${a.avatar}" /></span><h3 class="text-3xl font-black mt-4">${safe(a.nick)}</h3><p class="text-sm text-slate-500">${safe(a.email)}</p></div><form onsubmit="saveProfile(event)" class="space-y-4"><input id="profileNick" class="input" value="${safe(a.nick)}" placeholder="ชื่อเล่น" /><select id="profileGrade" class="input">${GRADES.map(g=>`<option value="${g}" ${a.grade===g?'selected':''}>${g}</option>`).join('')}</select><div><label class="text-sm font-black mb-2 block">เปลี่ยนรูปโปรไฟล์</label><input id="profileAvatarFile" type="file" accept="image/*" class="input" /></div><button class="btn-primary w-full py-4">บันทึกโปรไฟล์</button></form>`; openModal('profileModal'); }
+    async function saveProfile(e){ e.preventDefault(); const a=currentAccount(); const accs=store.accounts; const i=accs.findIndex(x=>x.id===a.id); accs[i].nick=$('profileNick').value.trim()||a.nick; accs[i].grade=$('profileGrade').value; const img=await fileToDataUrl($('profileAvatarFile').files[0]); if(img)accs[i].avatar=img; store.accounts=accs; closeAllModals(); renderAll(); if(activePage==='community')renderPosts(); if(activePage==='matching')runMatching(); alert('บันทึกโปรไฟล์แล้ว'); }
+
+    function renderEmojiPickers(){ ['postEmojiPicker','chatEmojiPicker'].forEach(id=>{ $(id).innerHTML=FAIRY_EMOJIS.map(e=>`<button type="button" class="emoji-btn" onclick="insertEmoji('${id}','${e}')">${e}</button>`).join(''); }); }
+    function toggleEmojiPicker(id){ $(id).classList.toggle('hidden'); if(id==='postEmojiPicker')activeEmojiTarget='postInput'; if(id==='chatEmojiPicker')activeEmojiTarget='chatInput'; }
+    function insertEmoji(pickerId,e){ const t=$(activeEmojiTarget || (pickerId==='postEmojiPicker'?'postInput':'chatInput')); const start=t.selectionStart||t.value.length; t.value=t.value.slice(0,start)+e+t.value.slice(start); t.focus(); t.selectionStart=t.selectionEnd=start+e.length; }
+
+    function openCreatePost(){ if(!currentAccount())return alert('กรุณาเข้าสู่ระบบก่อนโพสต์'); openModal('postModal'); }
+    async function handleCreatePost(e){ e.preventDefault(); const a=currentAccount(); const file=$('postMediaFile').files[0]; let media=null; if(file){ const data=await fileToDataUrl(file); media={type:file.type.startsWith('video')?'video':'image',data,name:file.name}; } const posts=store.posts; posts.unshift({id:uid(),authorId:a.id,author:a.nick,avatar:a.avatar,text:$('postInput').value,time:new Date().toISOString(),media,likes:[],comments:[]}); store.posts=posts; $('postInput').value=''; $('postMediaFile').value=''; closeAllModals(); renderPosts(); renderHomeStats(); }
+    function renderPosts(){ const a=currentAccount(); const dev=isDev(); $('postList').innerHTML=store.posts.map(p=>{ const author=store.accounts.find(x=>x.id===p.authorId); const avatar=author?.avatar||p.avatar||avatarFor(p.author); const name=author?.nick||p.author||'ผู้ใช้'; const liked=a&&p.likes?.includes(a.id); return `<article class="card rounded-[2rem] p-5"><div class="flex items-start justify-between gap-3 mb-4"><div class="flex items-center gap-3"><span class="avatar-wrap w-11 h-11"><img src="${avatar}" /></span><div><p class="font-black">${safe(name)}</p><p class="text-xs text-slate-500">${nowThai(p.time)}</p></div></div>${dev?`<button onclick="deletePost(${p.id})" class="text-red-500 text-sm font-black"><i class="fa-solid fa-trash mr-1"></i>ลบ</button>`:''}</div><p class="leading-relaxed whitespace-pre-wrap mb-4">${safe(p.text)}</p>${renderPostMedia(p)}<div class="flex items-center gap-2 mt-4"><button onclick="toggleLike(${p.id})" class="btn-soft px-4 py-2 text-sm ${liked?'text-pink-500':''}"><i class="fa-solid fa-heart mr-1"></i>${p.likes?.length||0}</button><button onclick="focusComment(${p.id})" class="btn-soft px-4 py-2 text-sm"><i class="fa-solid fa-comment mr-1"></i>${p.comments?.length||0}</button></div><div class="mt-4 space-y-3">${(p.comments||[]).map(c=>`<div class="rounded-2xl p-3 bg-white/30 dark:bg-slate-900/30 border border-white/20"><div class="flex justify-between gap-2"><b class="text-sm">${safe(accountName(c.authorId))}</b>${dev?`<button onclick="deleteComment(${p.id},${c.id})" class="text-xs text-red-500 font-bold">ลบ</button>`:''}</div><p class="text-sm whitespace-pre-wrap">${safe(c.text)}</p><p class="text-[10px] text-slate-500 mt-1">${nowThai(c.time)}</p></div>`).join('')}</div>${a?`<form onsubmit="addComment(event,${p.id})" class="mt-4 space-y-2"><div class="flex gap-2"><input id="comment_${p.id}" class="input flex-1" placeholder="คอมเมนต์พร้อมอิโมจิ Fairy Tail" /><button type="button" onclick="toggleCommentEmoji(${p.id})" class="btn-soft w-12">✦</button><button class="btn-primary px-4"><i class="fa-solid fa-paper-plane"></i></button></div><div id="commentEmoji_${p.id}" class="hidden grid grid-cols-8 sm:grid-cols-12 gap-2">${FAIRY_EMOJIS.map(e=>`<button type="button" class="emoji-btn" onclick="insertCommentEmoji(${p.id}, '${e}')">${e}</button>`).join('')}</div></form>`:''}</article>`; }).join('')||'<div class="card rounded-[2rem] p-10 text-center text-slate-500">ยังไม่มีโพสต์ในชุมชน</div>'; }
+    function renderPostMedia(p){ if(!p.media)return ''; if(p.media.type==='video')return `<video class="media-thumb" controls onclick="openMedia(${p.id})" src="${p.media.data}"></video>`; return `<img class="media-thumb iridescent-img" onclick="openMedia(${p.id})" src="${p.media.data}" alt="post media" />`; }
+    function openMedia(id){ const p=store.posts.find(x=>x.id===id); if(!p?.media)return; $('mediaPreview').innerHTML=p.media.type==='video'?`<video src="${p.media.data}" controls autoplay class="w-full max-h-[78vh] bg-black"></video>`:`<img src="${p.media.data}" class="w-full max-h-[78vh] object-contain bg-black" />`; openModal('mediaModal'); }
+    function toggleLike(id){ const a=currentAccount(); if(!a)return alert('กรุณาเข้าสู่ระบบก่อนกดไลก์'); const posts=store.posts; const p=posts.find(x=>x.id===id); p.likes=p.likes||[]; p.likes=p.likes.includes(a.id)?p.likes.filter(x=>x!==a.id):[...p.likes,a.id]; store.posts=posts; renderPosts(); }
+    function focusComment(id){ const el=$(`comment_${id}`); if(el)el.focus(); }
+    function toggleCommentEmoji(id){ const panel=$(`commentEmoji_${id}`); if(panel)panel.classList.toggle('hidden'); }
+    function insertCommentEmoji(id,e){ const el=$(`comment_${id}`); if(!el)return; const start=el.selectionStart||el.value.length; el.value=el.value.slice(0,start)+e+el.value.slice(start); el.focus(); el.selectionStart=el.selectionEnd=start+e.length; }
+    function addComment(e,id){ e.preventDefault(); const a=currentAccount(); const input=$(`comment_${id}`); const text=input.value.trim(); if(!text)return; const posts=store.posts; const p=posts.find(x=>x.id===id); p.comments=p.comments||[]; p.comments.push({id:uid(),authorId:a.id,text,time:new Date().toISOString()}); store.posts=posts; renderPosts(); }
+    function deletePost(id){ if(!isDev())return alert('เฉพาะผู้พัฒนา'); if(confirm('ยืนยันลบโพสต์นี้?')){ store.posts=store.posts.filter(p=>p.id!==id); renderPosts(); renderDevDashboard(); renderHomeStats(); } }
+    function deleteComment(pid,cid){ if(!isDev())return; const posts=store.posts; const p=posts.find(x=>x.id===pid); p.comments=(p.comments||[]).filter(c=>c.id!==cid); store.posts=posts; renderPosts(); renderDevDashboard(); }
+
+    function renderTutorRoom(){ const a=currentAccount(); if(!a)return $('tutorStatusView').innerHTML='<div class="card rounded-[2rem] p-10 text-center"><h3 class="text-xl font-black">กรุณาเข้าสู่ระบบ</h3><p class="text-slate-500 mt-2">เพื่อจัดการห้องติวเตอร์</p></div>'; if(!a.subRoles.includes('tutor'))return $('tutorStatusView').innerHTML='<div class="card rounded-[2rem] p-10 text-center"><h3 class="text-xl font-black">คุณยังไม่มีบทบาทติวเตอร์</h3><p class="text-slate-500 mt-2">บัญชีต้องเลือกบทบาทเสริมเป็นติวเตอร์</p></div>'; $('tutorStatusView').innerHTML=`<div class="card rounded-[2rem] p-6 md:p-8"><div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7"><div><h2 class="text-2xl font-black">ห้องติวเตอร์ของ ${safe(a.nick)}</h2><p class="text-sm text-slate-500">เลือกวิชาและระดับชั้นที่รับสอน</p></div><button onclick="toggleTutorOpen()" class="px-5 py-3 rounded-2xl font-black ${a.tutor.open?'bg-emerald-500 text-white':'btn-soft'}">${a.tutor.open?'เปิดรับสอน':'ปิดรับสอน'}</button></div><div class="grid md:grid-cols-2 gap-7"><div><h3 class="font-black mb-3">รายวิชาที่เปิดสอน</h3><div class="flex flex-wrap gap-2">${SUBJECTS.map(s=>`<button onclick="toggleTutorSubject('${s}')" class="chip ${a.tutor.subjects.includes(s)?'!bg-blue-600 !text-white':''}">${s}</button>`).join('')}</div></div><div><h3 class="font-black mb-3">ระดับชั้นที่รับสอน</h3><div class="grid grid-cols-3 gap-2">${GRADES.map(g=>`<button onclick="toggleTutorGrade('${g}')" class="py-3 rounded-xl font-black border ${a.tutor.grades.includes(g)?'bg-blue-600 text-white border-blue-600':'btn-soft'}">${g}</button>`).join('')}</div></div></div></div>`; }
+    function updateTutorData(data){ const a=currentAccount(); const accs=store.accounts; const i=accs.findIndex(x=>x.id===a.id); accs[i].tutor={...accs[i].tutor,...data}; store.accounts=accs; renderTutorRoom(); }
+    function toggleTutorOpen(){ const a=currentAccount(); updateTutorData({open:!a.tutor.open}); }
+    function toggleTutorSubject(s){ const a=currentAccount(); const arr=a.tutor.subjects.includes(s)?a.tutor.subjects.filter(x=>x!==s):[...a.tutor.subjects,s]; updateTutorData({subjects:arr}); }
+    function toggleTutorGrade(g){ const a=currentAccount(); const arr=a.tutor.grades.includes(g)?a.tutor.grades.filter(x=>x!==g):[...a.tutor.grades,g]; updateTutorData({grades:arr}); }
+
+    function runMatching(){ const subject=$('filterSubject').value; const tutors=store.accounts.filter(a=>a.subRoles.includes('tutor')&&a.tutor.open&&(!selectedFilterGrade||a.tutor.grades.includes(selectedFilterGrade))&&(!subject||a.tutor.subjects.includes(subject))); $('matchResults').innerHTML=tutors.map(t=>`<div class="card rounded-[2rem] p-5"><div class="flex items-center gap-4 mb-4"><span class="avatar-wrap w-16 h-16"><img src="${t.avatar}" /></span><div><h3 class="text-lg font-black">${safe(t.nick)}</h3><p class="text-xs text-slate-500">รับสอน ${t.tutor.grades.join(', ')||'ยังไม่ระบุ'}</p></div></div><div class="flex flex-wrap gap-2 mb-5">${t.tutor.subjects.map(s=>`<span class="chip">${safe(s)}</span>`).join('')}</div><button onclick="startChat(${t.id}, '${safe(subject)}', '${safe(selectedFilterGrade)}')" class="btn-primary w-full py-3">เริ่มแชทและบันทึกการจับคู่</button></div>`).join('')||'<div class="card rounded-[2rem] p-10 text-center text-slate-500 col-span-full">ไม่พบติวเตอร์ตามเงื่อนไข</div>'; }
+    function recordMatch(tutorId, subject, grade){ const me=currentAccount(); if(!me||me.id===tutorId)return; const matches=store.matches; matches.unshift({id:uid(),learnerId:me.id,tutorId,subject:subject||'ไม่ระบุ',grade:grade||me.grade||'ไม่ระบุ',time:new Date().toISOString(),status:'started'}); store.matches=matches.slice(0,300); renderHomeStats(); }
+    function startChat(id,subject='',grade=''){ if(!currentAccount())return alert('กรุณาเข้าสู่ระบบก่อนเริ่มแชท'); activeChatId=id; activeMatchMeta={subject,grade}; const t=store.accounts.find(x=>x.id===id); recordMatch(id,subject,grade); $('chatAvatar').src=t.avatar; $('chatName').textContent=t.nick; renderChat(); openModal('chatModal'); }
+    function renderChat(){ const me=currentAccount(); const key=[me.id,activeChatId].sort().join('_'); const msgs=store.chats[key]||[]; $('chatMessages').innerHTML=msgs.map(m=>`<div class="flex ${m.from===me.id?'justify-end':'justify-start'}"><div class="max-w-[82%] px-4 py-3 rounded-2xl text-sm ${m.from===me.id?'bg-blue-600 text-white rounded-tr-none':'card rounded-tl-none'}"><p class="whitespace-pre-wrap">${safe(m.text)}</p><p class="text-[10px] opacity-60 mt-1">${safe(m.time)}</p></div></div>`).join('')||'<p class="text-center text-slate-500 text-sm py-10">เริ่มคุยเพื่อตกลงเรียนได้เลย ✦</p>'; $('chatMessages').scrollTop=$('chatMessages').scrollHeight; }
+    function handleSendChat(e){ e.preventDefault(); const text=$('chatInput').value.trim(); if(!text)return; const me=currentAccount(); const key=[me.id,activeChatId].sort().join('_'); const chats=store.chats; chats[key]=chats[key]||[]; chats[key].push({from:me.id,text,time:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})}); store.chats=chats; $('chatInput').value=''; renderChat(); }
+
+    function checkDevAccess(){ if(isDev()&&store.devUnlocked){ $('devLockedView').classList.add('hidden'); $('devDashboard').classList.remove('hidden'); renderDevDashboard(); } else { $('devLockedView').classList.remove('hidden'); $('devDashboard').classList.add('hidden'); } }
+    function devLogin(){ if(!isDev())return alert('บัญชีนี้ไม่ใช่ผู้พัฒนา'); if($('devCodeInput').value!==DEV_SECRET)return alert('รหัสลับไม่ถูกต้อง'); store.devUnlocked=true; checkDevAccess(); }
+    function logoutDev(){ store.devUnlocked=false; checkDevAccess(); }
+    function renderDevDashboard(){ renderDevStats(); renderDevMatches(); renderDevSubjects(); renderDevUsers(); renderDevPosts(); }
+    function renderDevStats(){ const accs=store.accounts, posts=store.posts, matches=store.matches; const comments=posts.reduce((n,p)=>n+(p.comments?.length||0),0); const media=posts.filter(p=>p.media).length; const banned=accs.filter(a=>a.banUntil&&new Date(a.banUntil)>new Date()).length; const cards=[['บัญชี',accs.length,'fa-users'],['ติวเตอร์',accs.filter(a=>a.subRoles.includes('tutor')).length,'fa-chalkboard-user'],['โพสต์',posts.length,'fa-image'],['คอมเมนต์',comments,'fa-comments'],['สื่อ',media,'fa-photo-film'],['ถูกแบน',banned,'fa-ban']]; $('devStats').innerHTML=cards.map(c=>`<div class="card rounded-3xl p-4"><i class="fa-solid ${c[2]} text-blue-500 mb-3"></i><p class="text-xs text-slate-500 font-black">${c[0]}</p><p class="text-3xl font-black">${c[1]}</p></div>`).join(''); }
+    function renderDevMatches(){ const rows=store.matches.slice(0,40).map(m=>`<tr class="border-t border-white/20"><td class="p-3">${nowThai(m.time)}</td><td class="p-3 font-bold">${safe(accountName(m.learnerId))}</td><td class="p-3 font-bold">${safe(accountName(m.tutorId))}</td><td class="p-3">${safe(m.subject)}</td><td class="p-3">${safe(m.grade)}</td></tr>`).join(''); $('devMatchTable').innerHTML=`<table class="w-full text-sm min-w-[620px]"><thead><tr class="text-slate-500"><th class="p-3 text-left">เวลา</th><th class="p-3 text-left">ผู้เรียน</th><th class="p-3 text-left">ติวเตอร์</th><th class="p-3 text-left">วิชา</th><th class="p-3 text-left">ชั้น</th></tr></thead><tbody>${rows||'<tr><td class="p-6 text-center text-slate-500" colspan="5">ยังไม่มีการจับคู่</td></tr>'}</tbody></table>`; }
+    function renderDevSubjects(){ const counts={}; store.matches.forEach(m=>counts[m.subject]=(counts[m.subject]||0)+1); const max=Math.max(1,...Object.values(counts)); const list=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10); $('devSubjectInsight').innerHTML=list.map(([s,n])=>`<div><div class="flex justify-between text-sm font-bold mb-1"><span>${safe(s)}</span><span>${n}</span></div><div class="h-3 rounded-full bg-white/30 overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-blue-500 via-violet-500 to-emerald-400" style="width:${(n/max)*100}%"></div></div></div>`).join('')||'<p class="text-slate-500 text-sm">ยังไม่มีข้อมูลรายวิชาจากการจับคู่</p>'; }
+    function renderDevUsers(){ const rows=store.accounts.map(a=>`<tr class="border-t border-white/20"><td class="p-3"><div class="flex items-center gap-2"><span class="avatar-wrap w-9 h-9"><img src="${a.avatar}" /></span><div><b>${safe(a.nick)}</b><p class="text-xs text-slate-500">${safe(a.email)}</p></div></div></td><td class="p-3 text-xs">${safe(a.mainRole)} / ${safe(a.subRoles.join(', ')||'-')}</td><td class="p-3 text-xs">${a.banUntil&&new Date(a.banUntil)>new Date()?`<span class="text-red-500 font-bold">แบนถึง ${nowThai(a.banUntil)}</span>`:'<span class="text-emerald-500 font-bold">ใช้งานได้</span>'}</td><td class="p-3"><div class="flex flex-wrap gap-2"><input id="ban_${a.id}" class="input !w-20 !py-2" type="number" min="1" max="30" value="7" /><button onclick="banUser(${a.id})" class="px-3 py-2 rounded-xl bg-red-500 text-white font-bold text-xs">แบน</button><button onclick="unbanUser(${a.id})" class="px-3 py-2 rounded-xl bg-emerald-500 text-white font-bold text-xs">ปลด</button></div></td></tr>`).join(''); $('devUserTable').innerHTML=`<table class="w-full text-sm min-w-[760px]"><thead><tr class="text-slate-500"><th class="p-3 text-left">บัญชี</th><th class="p-3 text-left">บทบาท</th><th class="p-3 text-left">สถานะ</th><th class="p-3 text-left">แบน 1–30 วัน</th></tr></thead><tbody>${rows}</tbody></table>`; }
+    function renderDevPosts(){ const rows=store.posts.map(p=>`<tr class="border-t border-white/20"><td class="p-3"><b>${safe(accountName(p.authorId)||p.author)}</b><p class="text-xs text-slate-500">${nowThai(p.time)}</p></td><td class="p-3 max-w-[380px]"><p class="line-clamp-2">${safe(p.text)}</p></td><td class="p-3 text-xs">${p.media?p.media.type:'ไม่มี'} / ${p.comments?.length||0} คอมเมนต์</td><td class="p-3"><button onclick="deletePostFromDev(${p.id})" class="px-3 py-2 rounded-xl bg-red-500 text-white font-bold text-xs">ลบโพสต์</button></td></tr>`).join(''); $('devPostTable').innerHTML=`<table class="w-full text-sm min-w-[720px]"><thead><tr class="text-slate-500"><th class="p-3 text-left">ผู้โพสต์</th><th class="p-3 text-left">เนื้อหา</th><th class="p-3 text-left">รายละเอียด</th><th class="p-3 text-left">จัดการ</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="p-6 text-center text-slate-500">ยังไม่มีโพสต์</td></tr>'}</tbody></table>`; }
+    function banUser(id){ if(!isDev())return; let days=Number($(`ban_${id}`).value||7); days=Math.max(1,Math.min(30,days)); const accs=store.accounts; const i=accs.findIndex(a=>a.id===id); accs[i].banUntil=new Date(Date.now()+days*86400000).toISOString(); store.accounts=accs; if(store.current?.id===id)store.current=null; renderAll(); renderDevDashboard(); alert(`แบนบัญชี ${days} วันแล้ว`); }
+    function unbanUser(id){ const accs=store.accounts; const i=accs.findIndex(a=>a.id===id); if(i>=0)accs[i].banUntil=null; store.accounts=accs; renderDevDashboard(); }
+    function deletePostFromDev(id){ if(confirm('ยืนยันลบโพสต์นี้จากศูนย์ผู้พัฒนา?')){ store.posts=store.posts.filter(p=>p.id!==id); renderDevDashboard(); if(activePage==='community')renderPosts(); renderHomeStats(); } }
+
+    init();
+  </script>
+</body>
+</html>
